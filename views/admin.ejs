@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head') -%>
+
+  <body>
+    <%- include('partials/nav') -%>
+
+    <!-- Page Header -->
+    <header
+      class="masthead"
+      style="
+        background-image: url('./img/sincerely-media-vcF5y2Edm6A-unsplash.jpg');
+      "
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+              <h1 class="title-admin">Blog</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="form-wrapper">
+            <h2>Crear nuevo autor</h2>
+            <hr />
+            <form action="/autor/crear" method="POST">
+              <div class="form-group">
+                <label for="firstname">Nombre</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstname"
+                  name="firstname"
+                  placeholder="Ingresar nombre..."
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="lastname">Apellido</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastname"
+                  name="lastname"
+                  placeholder="Ingresar apellido..."
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  name="email"
+                  placeholder="Ingresar email..."
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  placeholder="Ingresar password..."
+                />
+              </div>
+
+              <button type="submit" class="btn btn-sm">Guardar</button>
+            </form>
+          </div>
+          <div class="form-wrapper">
+            <h2>Editar Artículo</h2>
+            <hr />
+            <form action="/articulo/modificar" method="POST">
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="id">Articulos</label>
+                </div>
+                <select name="id" class="custom-select" id="inputGroupSelect01">
+                  <option selected>Seleccionar...</option>
+                  <% articles.forEach(article => { %>
+                  <option value="<%= article.id %>">
+                    <%= article.title %>
+                  </option>
+                  <% }) %>
+                </select>
+              </div>
+              <div class="form-group my-4">
+                <label for="title">Título</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                  placeholder="Ingresar título..."
+                />
+              </div>
+
+              <div class="form-group my-4">
+                <label for="content">Contenido</label>
+                <textarea
+                  class="form-control"
+                  id="content"
+                  rows="10"
+                  name="content"
+                  placeholder="Ingresar contenido..."
+                ></textarea>
+              </div>
+
+              <div class="custom-file my-4">
+                <input
+                  id="image"
+                  name="image"
+                  type="file"
+                  class="custom-file-input"
+                />
+                <label class="custom-file-label" for="image"> Imagen... </label>
+              </div>
+
+              <button type="submit" class="btn btn-success btn-sm">
+                Actualizar
+              </button>
+            </form>
+          </div>
+          <div class="form-wrapper">
+            <h2>Crear nuevo artículo</h2>
+            <hr />
+            <form
+              action="/articulo/crear"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              <div class="form-group my-4">
+                <label for="title">Título</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="title"
+                  name="title"
+                  placeholder="Ingresar título..."
+                />
+              </div>
+
+              <div class="form-group my-4">
+                <label for="content">Contenido</label>
+                <textarea
+                  class="form-control"
+                  id="content"
+                  rows="10"
+                  name="content"
+                  placeholder="Ingresar contenido..."
+                ></textarea>
+              </div>
+
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <label class="input-group-text" for="authorId">Autores</label>
+                </div>
+                <select
+                  name="authorId"
+                  class="custom-select"
+                  id="inputGroupSelect01"
+                >
+                  <option selected>Seleccionar...</option>
+                  <% authors.forEach(author => { %>
+                  <option value="<%= author.id %> ">
+                    <%= author.firstname %> <%= author.lastname %>
+                  </option>
+                  <% }) %>
+                </select>
+              </div>
+
+              <div class="custom-file my-4">
+                <input
+                  id="image"
+                  name="image"
+                  type="file"
+                  class="custom-file-input"
+                />
+                <label class="custom-file-label" for="image"> Imagen... </label>
+              </div>
+
+              <button type="submit" class="btn btn-success btn-sm">
+                Guardar
+              </button>
+            </form>
+          </div>
+
+          <h3 class="article-list">Listado de artículos</h3>
+          <hr class="mb-4" />
+
+          <% articles.reverse().forEach(article => { %>
+          <div class="row">
+            <div class="col-8">
+              <a href="/articulo/<%= article.id %>">
+                <h5 class="lead"><%= article.title %></h5>
+              </a>
+            </div>
+            <div class="col-4 text-right">
+              <a
+                href="/articulo/eliminar/<%= article.id %>"
+                class="btn btn-sm btn-delete"
+              >
+                Eliminar
+              </a>
+            </div>
+          </div>
+          <hr class="mb-2" />
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <hr class="mt-5" />
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p class="copyright text-muted">Copyright &copy; Blog 2020</p>
+      </div>
+    </footer>
+    <%- include('partials/scripts') -%>
+  </body>
+</html>

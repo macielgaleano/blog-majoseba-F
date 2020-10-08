@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head') -%>
+
+  <body>
+    <%- include('partials/nav') -%>
+
+    <!-- Page Header -->
+    <header
+      class="masthead"
+      style="
+        background-image: url('./img/danielle-macinnes-IuLgi9PWETU-unsplash.jpg');
+      "
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+              <h1>Blog</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <% articles.reverse().forEach(article => { %>
+          <div class="post-preview">
+            <a href="/articulo/<%= article.id %>">
+              <h2 class="post-title"><%= article.title %></h2>
+            </a>
+            <p class="post-meta">
+              Posted by
+              <span
+                ><%= `${article.author.firstname} ${article.author.lastname}`
+                %></span
+              >
+              on
+              <span><%= article.createdAt.toLocaleString() %></span>
+            </p>
+          </div>
+          <% }) %>
+        </div>
+      </div>
+    </div>
+
+    <hr class="mt-5" />
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p class="copyright text-muted">Copyright &copy; Blog 2020</p>
+      </div>
+    </footer>
+
+    <%- include('partials/scripts') -%>
+  </body>
+</html>

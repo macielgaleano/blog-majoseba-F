@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <%- include('partials/head') -%>
+
+  <body>
+    <%- include('partials/nav') -%>
+
+    <!-- Page Header -->
+    <header
+      class="masthead"
+      style="background-image: url('<%- article.image %>')"
+    >
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading text-center">
+              <h1><%= article.title %></h1>
+              <span class="meta">
+                Posted by
+                <span
+                  ><%= `${article.author.firstname} ${article.author.lastname}`
+                  %></span
+                >
+                on
+                <span><%= article.createdAt.toLocaleString() %></span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto text-justify">
+            <p class="mb-5"><%- article.content %></p>
+          </div>
+        </div>
+        <div class="container">
+          <form action="/articulo/<%- article.id %>" method="POST">
+            <ul>
+              <% article.comments.forEach(comment => { %>
+              <li class="list-unstyled my-3 p-2">
+                <div class="media">
+                  <img
+                    src="https://thispersondoesnotexist.com/image"
+                    class="mr-3"
+                    width="45"
+                    alt="..."
+                  />
+                  <div class="media-body"><%- comment.content %></div>
+                </div>
+              </li>
+              <% }) %>
+            </ul>
+            <div class="form-group my-4 p-5">
+              <label class="mb-4" for="exampleFormControlTextarea1"
+                >Comentarios</label
+              >
+              <textarea
+                name="content"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="5"
+              ></textarea>
+              <button type="submit" class="btn btn-outline-secondary my-5">
+                Enviar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </article>
+
+    <hr class="mt-5" />
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <p class="copyright text-muted">Copyright &copy; Blog 2020</p>
+      </div>
+    </footer>
+
+    <%- include('partials/scripts') -%>
+  </body>
+</html>
