@@ -48,11 +48,8 @@ passport.use(
     },
     (email, password, done) => {
       Author.findOne({ where: { email: email } })
-        .then((err, autor) => {
+        .then((autor) => {
           console.log(`AUTOR : ${autor}`);
-          if (err) {
-            return done(err);
-          }
 
           if (!autor) {
             return done(null, false);
@@ -60,11 +57,9 @@ passport.use(
           /*  if (!user.validPassword(password)) {
             return done(null, false, { message: 'Incorrect password.' });
           } */
-          console.log("LocalStrategy - User OK");
-          console.log(autor);
           return done(null, autor);
         })
-        .catch((err) => console.log("error"));
+        .catch((err) => console.log("error en estrategia"));
     }
   )
 );
@@ -83,8 +78,7 @@ passport.deserializeUser(function (id, done) {
     });
 });
 ////
-app.use(authRouter);
-app.use(routes);
+app.use(routes, authRouter);
 
 app.listen(process.env.APP_PORT, () =>
   console.log(`servidor escuchando en el puerto ${process.env.APP_PORT}`)
